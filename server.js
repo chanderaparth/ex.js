@@ -1,12 +1,45 @@
 const express = require('express');
-const server = express(); // create server;
+const server = express();   // create server;
+const mongoose = require('mongoose');
 const port = '5555';
-const fs = require('fs');
-const product = require('./public/products.json');
 const morgan = require('morgan');
+const productRoutes = require('./routes/product.routes');
+const fs = require('fs');
+// const product = require('./public/products.json');
 // const { listen } = require('express/lib/application');
 // const { connect } = require('http2');
 // const { contentType } = require('express/lib/response');
+
+// DB connection
+async function main() {
+    await mongoose.connect('mongodb://127.0.0.1:27017/EX');
+}
+main().then(() => {
+    console.log('DB is connected...');
+}).catch((err) => {
+    console.log(err);
+});
+
+// middleware
+server.use(morgan('dev'))
+server.use(express.json());
+
+server.use('/product', productRoutes);
+
+server.listen(port, ()=>{
+    console.log(`Server start at ${port}`);
+})
+
+
+
+
+
+
+
+
+
+
+
 
 // 1.
 // server.get('/',(req,res)=>{
@@ -20,20 +53,16 @@ const morgan = require('morgan');
             
             //     res.send(`Hello world from ${req.params.username}`)
             // })
-
-// 2.
-    // middleware
-    server.use(morgan('dev'))
-    server.use(express.json());
-
-    // create,rade,update,delete //data 
-   // create products => /products
-   server.post('/products',(req,res)=>
-   {
-    product.push(req.body)
-    // res.json({Message:'product is addd',product: req.body})
-    res.json(product)
-   })
+            
+            // 2.
+// create,rade,update,delete //data 
+// create products => /products
+//    server.post('/products',(req,res)=>
+//    {
+//     product.push(req.body)
+//     res.json({Message:'product is addd',product: req.body})
+    // res.json(product)
+//    })
   // specific products => /products/:id   
 //    server.get('/product/:id',(req,res)=>{
 //     // const id = +req.params.id; number valu 
@@ -44,10 +73,10 @@ const morgan = require('morgan');
 
 
 //    replace products => /products/:id 
-server.post('/',(req,res,next)=>{
-    res.json(product);
-    next();
-})
+// server.post('/',(req,res,next)=>{
+//     res.json(product);
+//     next();
+// })
 // server.patch('/product/:id',(req,res)=>
 // {
 //     const id = req.params.id;
@@ -68,17 +97,14 @@ server.post('/',(req,res,next)=>{
 
 // delete
 
-server.delete('/product/:id',(req,res)=>
-{
-    const id = req.params.id;
-    const itemindex = product.findIndex((p)=>p.id===id)
-    let item = product[itemindex];
-    product.splice(itemindex,1);
-    res.status(200).json({Message: "product is delete",product: item});
-})
+// server.delete('/product/:id',(req,res)=>
+// {
+//     const id = req.params.id;
+//     const itemindex = product.findIndex((p)=>p.id===id)
+//     let item = product[itemindex];
+//     product.splice(itemindex,1);
+//     res.status(200).json({Message: "product is delete",product: item});
+// })
 
 
-server.listen(port, ()=>{
-    console.log(`Server start at ${port}`);
-})
 
