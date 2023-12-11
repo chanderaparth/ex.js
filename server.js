@@ -72,13 +72,10 @@ server.delete('/product/:id',(req,res)=>
 {
     const id = req.params.id;
     const itemindex = product.findIndex((p)=>p.id===id)
-    let item = product[itemindex]; 
+    let item = product[itemindex];
     product.splice(itemindex,1);
     res.status(200).json({Message: "product is delete",product: item});
 })
-
-
-
 
 
 server.listen(port, ()=>{
