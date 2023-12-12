@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "parth": "nodemon server.js"
+    "start": "node app.js",
+    "parth": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
