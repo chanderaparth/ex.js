@@ -8,7 +8,13 @@ const productSchema = new mongoose.Schema({
      description: String,
      price: Number,
      category: [String],
-     brand: String 
+     brand: String ,
+
+     isDelete:{
+        type : Boolean,
+        default : false
+    }
 });
+
 
 module.exports = mongoose.model('products',productSchema);

@@ -21,7 +21,7 @@ exports.addNewproduct = async(req,res) => {
     
 exports.getAllproducts =async(req,res) => {
     try {
-        let products  = await Product.find();
+        let products  = await Product.find({isDelete : false });
         res.json(products);
     } catch (err) {
         console.log(err);
@@ -32,7 +32,7 @@ exports.getAllproducts =async(req,res) => {
 exports.getproduct = async(req,res)=>{
     try {
         let id = req.params.id;
-        let products  = await Product.findById();
+        let products  = await Product.findById({isDelete:false});
         res.json(products);
     } catch (err) {
         console.log(err);
@@ -43,7 +43,7 @@ exports.getproduct = async(req,res)=>{
 exports.updateproduct = async(req,res)=>{
     try {
         let id = req.params.id;
-        let product  = await Product.findById(id);
+        let product  = await Product.findById(id,{isDelete : false});
         if (!product) {
             return res.json({Message: 'product is not found....'})
         }
@@ -71,8 +71,10 @@ exports.deleteproduct = async(req,res)=>{
         if (!product) {
             return res.json({Message: 'product is not found....'});
         }
-        product = await Product.findByIdAndDelete({_id: id});
-        res.json({Message: 'product is delete....',product});
+        product = await Product.findByIdAndUpdate(product._id,{isDelete: true},{new:true});
+        // product = await Product.findByIdAndDelete({_id: id});
+        // res.json({Message: 'product is delete....',product});
+        res.json({Message: 'product is delete....'});
     } catch (err) {
         console.log(err);
         res.status(500).json({Message: 'Internal Server errrer....'});
