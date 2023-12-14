@@ -71,8 +71,8 @@ exports.deleteproduct = async(req,res)=>{
         if (!product) {
             return res.json({Message: 'product is not found....'});
         }
-        product = await Product.findByIdAndUpdate(product._id,{isDelete: true},{new:true});
-        // product = await Product.findByIdAndDelete({_id: id});
+        product = await Product.findByIdAndUpdate(product._id,{isDelete: true},{new:true}); //deleteproduct soft
+        // product = await Product.findByIdAndDelete({_id: id}); // deleteproduct
         // res.json({Message: 'product is delete....',product});
         res.json({Message: 'product is delete....'});
     } catch (err) {
