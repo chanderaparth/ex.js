@@ -18,11 +18,8 @@ productRoutes.get('/',getAllproducts);
 // specific products => /products/:id
 productRoutes.get('/:id',getproduct);
 
-// replace products => /products/:id 
-productRoutes.put('/:id',replaceproduct);
-
 // update products => /products/:id
-productRoutes.patch('/:id',updateproduct);
+productRoutes.put('/:id',updateproduct);
 
 // delete products => /products/:id
 productRoutes.delete('/:id',deleteproduct);
