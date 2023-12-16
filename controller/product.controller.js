@@ -1,6 +1,7 @@
 // const product = require('../public/products.json');
 const Product = require('../model/product.model');
 
+
 exports.addNewproduct = async(req,res) => {
     try {
         let{title, description, price, category, brand} = req.body;

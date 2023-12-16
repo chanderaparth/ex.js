@@ -1,30 +1,30 @@
 const express = require('express');
 const userRoutes = express.Router();
 const{
-    addNewproduct,
-    getAllproducts,
-    getproduct,
-    replaceproduct,
-    updateproduct,
-    deleteproduct
+    Signup,
+    login
+    // getproduct,
+    // replaceproduct,
+    // updateproduct,
+    // deleteproduct
 }= require('../controller/user.controller');
 
 // create products -> /product
-userRoutes.post('/',addNewproduct);
+userRoutes.post('/Signup',Signup);
 
 // All product -> /products
-userRoutes.get('/',getAllproducts);
+userRoutes.post('/login',login);
 
-// specific products => /products/:id
-userRoutes.get('/:id',getproduct);
+// // specific products => /products/:id
+// userRoutes.get('/:id',getproduct);
 
-// replace products => /products/:id 
-userRoutes.put('/:id',replaceproduct);
+// // replace products => /products/:id 
+// userRoutes.put('/:id',replaceproduct);
 
-// update products => /products/:id
-userRoutes.patch('/:id',updateproduct);
+// // update products => /products/:id
+// userRoutes.patch('/:id',updateproduct);
 
-// delete products => /products/:id
-userRoutes.delete('/:id',deleteproduct);
+// // delete products => /products/:id
+// userRoutes.delete('/:id',deleteproduct);
 
 module.exports = userRoutes;

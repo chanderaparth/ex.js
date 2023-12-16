@@ -1,45 +1,44 @@
-const product = require('../public/products.json');
-// const product = require('../model/product.model');
+// const product = require('../public/products.json');
+const user = require('../model/user.model');
+const bcrypt = require('bcrypt');
 
-exports.addNewproduct = (req,res) => {
-    product.push(req.body)
-    res.json({Message:'product is addd',product: req.body})
-
-   };
-    
-exports.getAllproducts = (req,res) => {
-    res.status(201).json(product);
-   };
-
-exports.getproduct = (req,res)=>{
-        // const id = +req.params.id; number valu 
-        const id = req.params.id;
-        const item = product.find((p)=>p.id===id)
-        res.status(200).json(item);
-       };
-
-exports.replaceproduct = (req,res)=>
-{
-    const id = req.params.id;
-    const itemindex = product.findIndex((p)=>p.id===id)
-    product.splice(itemindex,1,{...req.body,id:id})
-    res.status(200).json({Message: "product is replace"});
+exports.Signup = async (req, res) => {
+try {
+const { FirstName, LastName, Email, Password, Gender } = req.body; 
+let User = await user.findOne({ Email: Email, isDelete: false }); 
+if (User) {
+    return res.json({ message: 'User is already exist...' });
+}
+let hashPassword = await bcrypt.hash (Password, 10);
+console.log(hashPassword);
+user = await user.create({
+    FirstName,LastName, Email,
+    Password: hashPassword,
+    Gender
+});
+    user.save();
+    res.status(201).json({ user, message: 'User is added' });
+}
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 };
 
-exports.updateproduct = (req,res)=>
-{
-    const id = req.params.id;
-    const itemindex = product.findIndex((p)=>p.id===id)
-    let item = product[itemindex]; 
-    product.splice(itemindex,1,{...item,...req.body})
-    res.status(200).json({Message: "product is update",product: item});
-};
-
-exports.deleteproduct = (req,res)=>
-{
-    const id = req.params.id;
-    const itemindex = product.findIndex((p)=>p.id===id)
-    let item = product[itemindex];
-    product.splice(itemindex,1);
-    res.status(200).json({Message: "product is delete",product: item});
+exports.login = async (req, res) => {
+try {
+const { Email, Password } = req.body;
+let User = await user.findOne({ Email: Email, isDelete: false }); 
+if (!User) {
+    return res.json({ message: 'User is not found' });
+}
+let checkpassword = await bcrypt.compare (Password, User.Password);
+if(!checkpassword){
+    return res.json({message: 'Password is not matched'});
+}
+res.status(200).json(User);
+} catch (error) {
+console.log(error);
+res.status(500).json({ message: 'Internal Server Error' });
+}
 };

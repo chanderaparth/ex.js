@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const port = '5555';
 const morgan = require('morgan');
 const productRoutes = require('./routes/product.routes');
+const userRoutes = require('./routes/user.routes');
 const fs = require('fs');
 // const product = require('./public/products.json');
 // const { listen } = require('express/lib/application');
@@ -24,7 +25,8 @@ main().then(() => {
 server.use(morgan('dev'))
 server.use(express.json());
 
-server.use('/product', productRoutes);
+server.use('/api/product', productRoutes);
+server.use('/api/user',userRoutes);
 
 server.listen(port, ()=>{
     console.log(`Server start at ${port}`);
