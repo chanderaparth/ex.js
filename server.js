@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const server = express();   // create server;
 const mongoose = require('mongoose');
-const port = '5555';
+const port = process.env.PORT;
 const morgan = require('morgan');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
@@ -13,7 +14,7 @@ const fs = require('fs');
 
 // DB connection
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/EX');
+    await mongoose.connect(process.env.MONGO_DB_URL);
 }
 main().then(() => {
     console.log('DB is connected...');

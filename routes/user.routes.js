@@ -12,7 +12,7 @@ const{
 // create Signup -> /Signup
 userRoutes.post('/Signup',Signup);
 
-// All login -> /login
+// login -> /login
 userRoutes.post('/login',login);
 
 // // specific products => /products/:id
