@@ -11,13 +11,13 @@ if (User) {
 }
 let hashPassword = await bcrypt.hash (Password, 10);
 console.log(hashPassword);
-user = await user.create({
+User = await user.create({
     FirstName,LastName, Email,
     Password: hashPassword,
     Gender
 });
-    user.save();
-    res.status(201).json({ user, message: 'User is added' });
+    User.save();
+    res.status(201).json({ User, message: 'User is added' });
 }
     catch (error) {
         console.log(error);
@@ -32,8 +32,8 @@ let User = await user.findOne({ Email: Email, isDelete: false });
 if (!User) {
     return res.json({ message: 'User is not found' });
 }
-let checkpassword = await bcrypt.compare (Password, User.Password);
-if(!checkpassword){
+let checkPassword = await bcrypt.compare (Password, User.Password);
+if(!checkPassword){
     return res.json({message: 'Password is not matched'});
 }
 res.status(200).json(User);

@@ -19,9 +19,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:true,
     },
-    Gendar:{
+    Gender:{
         type: String,
-        enum: ['Male','Female'],
+        enum: ['Male','Female']
         // required:true,
     },
 

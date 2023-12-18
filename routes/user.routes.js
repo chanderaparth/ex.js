@@ -9,10 +9,10 @@ const{
     // deleteproduct
 }= require('../controller/user.controller');
 
-// create products -> /product
+// create Signup -> /Signup
 userRoutes.post('/Signup',Signup);
 
-// All product -> /products
+// All login -> /login
 userRoutes.post('/login',login);
 
 // // specific products => /products/:id
