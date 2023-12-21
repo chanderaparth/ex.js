@@ -1,12 +1,12 @@
 const express = require('express');
 const userRoutes = express.Router();
+const{ verifyToken } = require('../Halprtoken/tokenvaryfay');
 const{
     Signup,
-    login
-    // getproduct,
-    // replaceproduct,
-    // updateproduct,
-    // deleteproduct
+    login,
+    getuser,
+    updateuser,
+    deleteuser
 }= require('../controller/user.controller');
 
 // create Signup -> /Signup
@@ -15,16 +15,13 @@ userRoutes.post('/Signup',Signup);
 // login -> /login
 userRoutes.post('/login',login);
 
-// // specific products => /products/:id
-// userRoutes.get('/:id',getproduct);
+// // specific user => /profile
+userRoutes.get('/profile',verifyToken,getuser);
 
-// // replace products => /products/:id 
-// userRoutes.put('/:id',replaceproduct);
+// update user => /update-profile
+userRoutes.put('/update-profile',verifyToken,updateuser);
 
-// // update products => /products/:id
-// userRoutes.patch('/:id',updateproduct);
-
-// // delete products => /products/:id
-// userRoutes.delete('/:id',deleteproduct);
+// delete user => /delete
+userRoutes.delete('/delete',deleteuser);
 
 module.exports = userRoutes;
