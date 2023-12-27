@@ -11,7 +11,7 @@ exports.verifyToken = async (req, res, next) => {
     req.user = await User.findById(userid);
     // console.log(req.user);
     if (req.user !== "undefined") {
-        next();
+      next();
     } else {
         res.json({Message: 'user invalid'});
     }

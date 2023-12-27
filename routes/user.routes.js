@@ -6,7 +6,8 @@ const{
     login,
     getuser,
     updateuser,
-    deleteuser
+    deleteuser,
+    chagePassword
 }= require('../controller/user.controller');
 
 // create Signup -> /Signup
@@ -23,5 +24,7 @@ userRoutes.put('/update-profile',verifyToken,updateuser);
 
 // delete user => /delete
 userRoutes.delete('/delete',deleteuser);
+
+userRoutes.put('/update',verifyToken,chagePassword);
 
 module.exports = userRoutes;

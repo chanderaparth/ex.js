@@ -7,6 +7,11 @@ const morgan = require('morgan');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
 const fs = require('fs');
+const cartRoute = require('./routes/Cart.routes');
+const orderRoute = require('./routes/order.routes');
+const authRouthes = require('./routes/auth.routes');
+const path = require('path');
+const imagepath = path.join(__dirname,'public','images');
 // const product = require('./public/products.json');
 // const { listen } = require('express/lib/application');
 // const { connect } = require('http2');
@@ -25,9 +30,15 @@ main().then(() => {
 // middleware
 server.use(morgan('dev'))
 server.use(express.json());
+server.use('/public/images',express.static(imagepath));
 
 server.use('/api/product', productRoutes);
 server.use('/api/user',userRoutes);
+server.use('/api/cart',cartRoute);
+server.use('/api/order',orderRoute);
+server.use('/api/auth',authRouthes);
+
+
 
 server.listen(port, ()=>{
     console.log(`Server start at ${port}`);

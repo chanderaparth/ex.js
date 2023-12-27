@@ -43,7 +43,8 @@ let payload = {
 let token = jwt.sign(payload,process.env.SECRET_KEY); //{expiresin: "10 min"}
 // console.log(token);
 res.status(200).json({token, message : 'login sucess'});
-}catch (error) {
+}
+catch (error) {
 console.log(error);
 
 res.status(500).json({ message: 'Internal Server Error' });
@@ -70,6 +71,27 @@ exports.updateuser = async (req, res) => {
       res.status(500).json({ Message: "Internal Server errrer...." });
     }
   };
+  exports.chagePassword = async (req,res) => {
+    const { currentPassword, newPassword, confamePassword} = req.body;
+  
+    let checkPassword = await bcrypt.compare(currentPassword, req.user.Password);
+    if(!checkPassword){
+        return res.json({message:"your Password is wrong."})
+    }
+    if(newPassword !== confamePassword){
+        return res.json({message:"Your new password and confirm password are different."})
+    }
+    let hashedPassword = await bcrypt.hash(confamePassword, 10);
+    let user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {"Password": hashedPassword}
+        },
+        {new: true}
+    )
+  
+    res.json({user, message: "successfully change the password"});
+  }
   
   exports.deleteuser = async (req, res) => {
     try {
